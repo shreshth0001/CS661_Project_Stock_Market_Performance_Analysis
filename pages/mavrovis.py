@@ -166,10 +166,10 @@ def create_volatility_plot(df, title="Volatility Metrics"):
         row=2, col=1
     )
     
-    # Price with volatility overlay
+    # Price with volatility overlay - Changed color to bright blue for better visibility
     fig.add_trace(
         go.Scatter(x=df.index, y=df['Close'], 
-                  name='Close Price', line=dict(color='black')),
+                  name='Close Price', line=dict(color='#1f77b4', width=2)),
         row=2, col=2
     )
     
