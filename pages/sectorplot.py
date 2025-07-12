@@ -276,7 +276,7 @@ def calculate_correlation_analysis(sector_data, macro_data, sector_name, macro_v
     return correlation, p_value, strength
 
 def main():
-    st.markdown('<h1 class="main-header">📈 Financial Market Analysis Dashboard</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">📈 Sector Analysis Dashboard</h1>', unsafe_allow_html=True)
     
     # Load data
     stock_info, macro_data, stock_data = load_data()
