@@ -3,9 +3,13 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import home
 from plotly.subplots import make_subplots
 import io
+
+folder_path = 'data/processed'
+csv_files = [f
+             for f in os.listdir(folder_path)
+             if f.endswith('.csv')]
 
 # Set page config
 st.set_page_config(page_title="Stock Greed-Fear & Volatility Analysis", layout="wide")
@@ -186,7 +190,7 @@ def create_volatility_plot(df, title="Volatility Metrics"):
 
 def main():
     st.title("📈 Stock Greed-Fear & Volatility Analysis")
-    stock = st.selectbox("Select a Stock",[s.removesuffix(".csv") for s in home.csv_files])
+    stock = st.selectbox("Select a Stock",[s.removesuffix(".csv") for s in csv_files])
     
     # Read the CSV file
     df = pd.read_csv(f"data/processed/{stock}.csv")
