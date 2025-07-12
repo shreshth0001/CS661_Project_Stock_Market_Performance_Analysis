@@ -33,8 +33,41 @@ st.markdown("""
         border-radius: 10px;
         margin: 1rem 0;
     }
-    .stSelectbox > div > div {
-        background-color: white;
+    
+    /* Fix selectbox styling to match date inputs */
+    .stSelectbox > div > div > div {
+        background-color: #f0f2f6 !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 0.375rem !important;
+    }
+    
+    .stSelectbox > div > div > div:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 1px #3b82f6 !important;
+    }
+    
+    .stSelectbox > div > div > div > div {
+        background-color: #f0f2f6 !important;
+        color: #374151 !important;
+    }
+    
+    /* Ensure dropdown menu matches */
+    .stSelectbox > div > div > div > div > div {
+        background-color: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 0.375rem !important;
+    }
+    
+    /* Match date input styling */
+    .stDateInput > div > div > input {
+        background-color: #f0f2f6 !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 0.375rem !important;
+    }
+    
+    /* Ensure consistent styling across all form inputs */
+    .stSelectbox, .stDateInput {
+        font-family: "Source Sans Pro", sans-serif !important;
     }
 </style>
 """, unsafe_allow_html=True)
