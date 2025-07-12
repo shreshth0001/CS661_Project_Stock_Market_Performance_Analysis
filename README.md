@@ -37,17 +37,21 @@ This project is a multi‑page **Streamlit** dashboard that lets you visualize s
 
 ## 3. Datasets
 
-- **Raw Data (`data/raw/`)**  
-  - Daily OHLCV for each ticker from the yfinance API.  
+- **Macro Data**  
   - Macro series: CPI (inflation), GDP movements, daily Fed funds rate, Unemployment rate
+  - Calculate daily GDP growth rates, inflation, etc. from the macroeconomic data to visualize the effects of macroeconomic data better.
 
-- **Processed Data (`data/processed/`)**  
+- **Processed Data (`data/processed/`)**
+  - Daily OHLCV for each ticker from the yfinance API. 
   - Cleaned, merged, and feature‑engineered CSVs  
     - One file per metric (e.g., `AAPL_COxV.csv`, `TECH_sector_return.csv`, `US_CPI.csv`)  
   - Columns:  
     - For stocks: `Date`, `Open`, `High`, `Low`, `Close`, `Volume`, `COxV`  
-    - For macros: `Date`, `Value`  
-
+    - For macros: `Date`, `Value`
+- **geodat.csv**
+  - Provides geodata(zipcode, HQ location, etc.) for the different stocks.
+  - Can be fed into geolocating python libraries to obtain locations of companies and their states.
+  - Also provides stock sector data.
 ---
 
 ## 4. Prerequisites
