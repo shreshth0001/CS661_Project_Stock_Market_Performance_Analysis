@@ -379,8 +379,7 @@ st.markdown("""
     <h2>🎓 CS661 - Big Data Visual Analytics</h2>
     <h3>Indian Institute of Technology Kanpur</h3>
     <p style="font-size: 1.3rem; margin: 2rem 0; font-weight: 500;">
-        This comprehensive financial analytics platform represents the pinnacle of our academic journey, 
-        combining theoretical rigor with practical innovation to deliver a world-class analytical solution.
+        This comprehensive financial analytics platform represents our understanidng of visualization with a practical application.
     </p>
     <div style="margin: 2rem 0;">
         <p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>🏆 Project Achievements:</strong></p>
