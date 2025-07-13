@@ -376,7 +376,7 @@ with col4:
 # Team and Course Section
 st.markdown("""
 <div class="team-section">
-    <h2>🎓 CS661 - Data Science & Analytics Project</h2>
+    <h2>🎓 CS661 - Big Data Visual Analytics</h2>
     <h3>Indian Institute of Technology Kanpur</h3>
     <p style="font-size: 1.3rem; margin: 2rem 0; font-weight: 500;">
         This comprehensive financial analytics platform represents the pinnacle of our academic journey, 
