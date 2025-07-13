@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import os
+from datetime import datetime, timedelta
 
 folder_path = 'data/processed'
 csv_files = [f
@@ -241,16 +242,28 @@ def create_volatility_plot(df, title="Volatility Metrics"):
     
     return fig
 
+def filter_data_by_date(df, start_date, end_date):
+    """
+    Filter dataframe by date range
+    """
+    if start_date is not None and end_date is not None:
+        mask = (df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))
+        return df.loc[mask]
+    elif start_date is not None:
+        mask = df.index >= pd.Timestamp(start_date)
+        return df.loc[mask]
+    elif end_date is not None:
+        mask = df.index <= pd.Timestamp(end_date)
+        return df.loc[mask]
+    else:
+        return df
+
 def main():
     st.title("📈 Stock Greed-Fear, Sentiment & Volatility Analysis")
     stock = st.selectbox("Select a Stock", [s.removesuffix(".csv") for s in csv_files])
     
     # Read the CSV file
     df = pd.read_csv(f"data/processed/{stock}.csv")
-    
-    st.subheader("📊 Data Preview")
-    st.write(f"Data shape: {df.shape}")
-    st.dataframe(df.head())
     
     # Check for required columns
     required_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -273,8 +286,56 @@ def main():
     if date_column:
         df[date_column] = pd.to_datetime(df[date_column])
         df = df.set_index(date_column)
+        
+        # Date range selector
+        st.subheader("📅 Date Range Selection")
+        col1, col2 = st.columns(2)
+        
+        # Get min and max dates from the data
+        min_date = df.index.min().date()
+        max_date = df.index.max().date()
+        
+        with col1:
+            start_date = st.date_input(
+                "Start Date",
+                value=min_date,
+                min_value=min_date,
+                max_value=max_date,
+                help="Select the start date for analysis"
+            )
+        
+        with col2:
+            end_date = st.date_input(
+                "End Date",
+                value=max_date,
+                min_value=min_date,
+                max_value=max_date,
+                help="Select the end date for analysis"
+            )
+        
+        # Validate date range
+        if start_date > end_date:
+            st.error("Start date cannot be after end date!")
+            return
+        
+        # Filter data by selected date range
+        original_shape = df.shape
+        df = filter_data_by_date(df, start_date, end_date)
+        
+        if df.empty:
+            st.error("No data available for the selected date range!")
+            return
+        
+        # Show data range info
+        st.info(f"📊 Showing data from {start_date} to {end_date} ({df.shape[0]} records out of {original_shape[0]} total)")
+        
     else:
         st.warning("No date column found. Using row index as time axis.")
+        st.info("💡 To use date filtering, ensure your CSV has a 'Date', 'date', or 'Datetime' column")
+    
+    st.subheader("📊 Data Preview")
+    st.write(f"Data shape: {df.shape}")
+    st.dataframe(df.head())
     
     # Sector selection if available
     if 'Sector' in df.columns:
@@ -359,11 +420,6 @@ def main():
     vol_plot = create_volatility_plot(df, "Volatility Metrics Dashboard")
     st.plotly_chart(vol_plot, use_container_width=True)
     
-    # Comprehensive Dashboard
-    # st.subheader("🎛️ Comprehensive Dashboard")
-    # comp_plot = create_comprehensive_dashboard(df)
-    # st.plotly_chart(comp_plot, use_container_width=True)
-    #
     # Correlation Analysis
     st.subheader("🔗 Correlation Analysis")
     correlation_data = df[['Greed_Fear_Index', 'Sentiment_Score', 'Historical_Volatility', 'ATR_Percentage', 'BB_Width']].corr()
@@ -407,7 +463,7 @@ def main():
     st.download_button(
         label="Download CSV with all calculated metrics",
         data=csv_data,
-        file_name=f"{stock}_analysis_with_sentiment.csv",
+        file_name=f"{stock}_analysis_with_sentiment_{start_date}_{end_date}.csv" if date_column else f"{stock}_analysis_with_sentiment.csv",
         mime="text/csv"
     )
        
