@@ -27,6 +27,19 @@ st.markdown("""
         text-align: center;
         margin-bottom: 2rem;
     }
+            
+    section[data-testid="stSidebar"] {
+    background: #232946;
+     color: #fff;
+      
+    }
+
+    /* CSS hack: Move the first sidebar block to the top */
+    section[data-testid="stSidebar"] > div:first-child {
+        order: -1;
+    }
+            
+        
     .metric-container {
         background-color: #f0f2f6;
         padding: 1rem;
@@ -71,6 +84,10 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+with st.sidebar:
+    st.markdown("<h2 style='margin-bottom: 1.5rem;'>NAVIGATION</h2>", unsafe_allow_html=True)
+
 
 @st.cache_data
 def load_stock_data(data_path: str = "data/processed") -> Dict[str, pd.DataFrame]:
@@ -265,7 +282,7 @@ def create_dual_plot(stock_data: pd.Series, macro_data: pd.Series,
 
 def main():
     # Header
-    st.markdown('<h1 class="main-header">📈 Stock & Macroeconomic Data Visualization</h1>', 
+    st.markdown('<h1 class="main-header"> Stock & Macroeconomic Data Visualization</h1>', 
                 unsafe_allow_html=True)
     
     # Load data
@@ -367,7 +384,7 @@ def main():
         # Display key metrics
         with col1:
             st.metric(
-                "📊 Selected Stock",
+                " Selected Stock",
                 selected_stock,
                 f"{len(stock_df_filtered)} trading days"
             )
@@ -375,7 +392,7 @@ def main():
         with col2:
             avg_value = value_proxy.mean()
             st.metric(
-                "💰 Avg Value Proxy",
+                " Avg Value Proxy",
                 f"${avg_value:,.0f}",
                 f"±${value_proxy.std():,.0f}"
             )
@@ -389,23 +406,23 @@ def main():
             
             # Determine display format based on indicator type
             if selected_macro == 'GDP' or 'GDP' in selected_macro:
-                metric_label = f"📈 Avg Daily GDP Growth"
+                metric_label = f" Avg Daily GDP Growth"
                 metric_value = f"{avg_macro:.4f}%"
                 metric_delta = f"±{macro_filtered.std():.4f}%"
             elif selected_macro == 'CPI' or 'CPI' in selected_macro:
-                metric_label = f"📈 Avg Daily Inflation Rate"
+                metric_label = f" Avg Daily Inflation Rate"
                 metric_value = f"{avg_macro:.4f}%"
                 metric_delta = f"±{macro_filtered.std():.4f}%"
             elif selected_macro == 'Unemployment_Rate' or 'UNEMPLOYMENT' in selected_macro.upper():
-                metric_label = f"📈 Avg Unemployment Rate"
+                metric_label = f" Avg Unemployment Rate"
                 metric_value = f"{avg_macro:.2f}%"
                 metric_delta = f"±{macro_filtered.std():.2f}%"
             elif selected_macro == 'Fed_Funds_Rate' or ('FED' in selected_macro.upper() and 'FUNDS' in selected_macro.upper()):
-                metric_label = f"📈 Avg Fed Funds Rate"
+                metric_label = f" Avg Fed Funds Rate"
                 metric_value = f"{avg_macro:.2f}%"
                 metric_delta = f"±{macro_filtered.std():.2f}%"
             else:
-                metric_label = f"📈 Avg {selected_macro}"
+                metric_label = f" Avg {selected_macro}"
                 metric_value = f"{avg_macro:.2f}%"
                 metric_delta = f"±{macro_filtered.std():.2f}%"
             
@@ -416,7 +433,7 @@ def main():
             )
         
         # Create and display the plot - now spans full width
-        st.subheader("📊 Interactive Visualization")
+        st.subheader(" Interactive Visualization")
         
         fig = create_dual_plot(
             value_proxy,
@@ -430,7 +447,7 @@ def main():
         st.plotly_chart(fig, use_container_width=True)
         
         # Additional insights
-        st.subheader("🔍 Data Insights")
+        st.subheader(" Data Insights")
         
         col1, col2 = st.columns(2)
         

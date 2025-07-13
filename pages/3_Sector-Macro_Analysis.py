@@ -30,6 +30,18 @@ st.markdown("""
         text-align: center;
         margin-bottom: 2rem;
     }
+            
+    section[data-testid="stSidebar"] {
+      background: #232946;
+      color: #fff;
+      
+    }
+
+    /* CSS hack: Move the first sidebar block to the top */
+    section[data-testid="stSidebar"] > div:first-child {
+        order: -1;
+    }
+            
     .section-header {
         font-size: 1.8rem;
         font-weight: bold;
@@ -68,6 +80,10 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+with st.sidebar:
+    st.markdown("<h2 style='margin-bottom: 1.5rem;'>NAVIGATION</h2>", unsafe_allow_html=True)
+
 
 @st.cache_data
 def load_data():
@@ -276,7 +292,7 @@ def calculate_correlation_analysis(sector_data, macro_data, sector_name, macro_v
     return correlation, p_value, strength
 
 def main():
-    st.markdown('<h1 class="main-header">📈 Sector Analysis Dashboard</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header"> Sector Analysis Dashboard</h1>', unsafe_allow_html=True)
     
     # Load data
     stock_info, macro_data, stock_data = load_data()
@@ -288,7 +304,7 @@ def main():
    
     
     # SUBSECTION 1: Sector vs Macro Analysis
-    st.markdown('<h2 class="section-header">🔍 Section 1: Sector vs Macroeconomic Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header"> Section 1: Sector vs Macroeconomic Analysis</h2>', unsafe_allow_html=True)
     
     # Filters for Section 1
     col1, col2, col3 = st.columns(3)
@@ -397,7 +413,7 @@ def main():
                 sector_stats = sector_data_1['value_proxy'].describe()
                 macro_stats = macro_data_1['processed_value'].describe()
                 
-                st.markdown("### 📊 Statistical Summary")
+                st.markdown("###  Statistical Summary")
                 
                 col1, col2 = st.columns(2)
                 
@@ -416,7 +432,7 @@ def main():
                     st.write(f"- Minimum Value: {macro_stats['min']:.3f}")
     
     # SUBSECTION 2: Interactive Sector Performance Heatmap
-    st.markdown('<h2 class="section-header">🔥 Section 2: Interactive Sector Performance Heatmap</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header"> Section 2: Interactive Sector Performance Heatmap</h2>', unsafe_allow_html=True)
     
     # Filters for Section 2
     col1, col2 = st.columns(2)
@@ -431,7 +447,7 @@ def main():
         )
     
     with col2:
-        st.markdown("**🎯 Heatmap Guide:**")
+        st.markdown("** Heatmap Guide:**")
         st.markdown("• **Dark colors** = High performance percentile")
         st.markdown("• **Light colors** = Low performance percentile")
         st.markdown("• **Hover** over cells for detailed values")
@@ -454,34 +470,34 @@ def main():
                 st.info("💡 **Interactive Tip**: Hover over any cell to see detailed performance data for that sector-month combination!")
                 
                 # Analysis for Section 2
-                st.markdown('<h3 class="section-header">🎯 Heatmap Performance Analysis</h3>', unsafe_allow_html=True)
+                st.markdown('<h3 class="section-header"> Heatmap Performance Analysis</h3>', unsafe_allow_html=True)
                 
                 # Performance insights using summary stats
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.markdown("### 🏆 Top Overall Performers")
+                    st.markdown("###  Top Overall Performers")
                     for i, (sector, value) in enumerate(summary_stats['top_performers'].items()):
                         rank_emoji = ["🥇", "🥈", "🥉", "🏅", "🏅"][i]
                         st.write(f"{rank_emoji} **{sector}**: {value:,.0f}")
                 
                 with col2:
-                    st.markdown("### 🎯 Most Consistent Performers")
+                    st.markdown("###  Most Consistent Performers")
                     for i, (sector, std_dev) in enumerate(summary_stats['most_consistent'].items()):
                         stability_emoji = ["🔒", "🔐", "🛡️", "⚖️", "📊"][i]
                         st.write(f"{stability_emoji} **{sector}**: σ = {std_dev:,.0f}")
                 
                 # Monthly performance trends
-                st.markdown("### 📅 Monthly Market Activity")
+                st.markdown("###  Monthly Market Activity")
                 
                 # Find peak performance months
                 top_months = summary_stats['monthly_totals'].nlargest(5)
-                st.markdown("**🔥 Highest Activity Months:**")
+                st.markdown("** Highest Activity Months:**")
                 for i, (month, total) in enumerate(top_months.items()):
                     st.write(f"{i+1}. **{month}**: {total:,.0f}")
                 
                 # Sector performance matrix insights
-                st.markdown("### 🎨 Heatmap Pattern Analysis")
+                st.markdown("###  Heatmap Pattern Analysis")
                 
                 # Calculate sector performance patterns
                 all_sector_data['month'] = all_sector_data['date'].dt.to_period('M')
@@ -507,7 +523,7 @@ def main():
                     col1, col2 = st.columns(2)
                     
                     with col1:
-                        st.markdown("**🌊 Most Seasonal Sector:**")
+                        st.markdown("** Most Seasonal Sector:**")
                         sector_name, data = most_seasonal
                         st.write(f"• **{sector_name}**")
                         st.write(f"  - Seasonality Score: {data['coefficient_of_variation']:.2f}")
@@ -517,32 +533,32 @@ def main():
                             st.write(f"  - Low Month: {data['min_month']}")
                     
                     with col2:
-                        st.markdown("**🎯 Most Stable Sector:**")
+                        st.markdown("** Most Stable Sector:**")
                         sector_name, data = least_seasonal
                         st.write(f"• **{sector_name}**")
                         st.write(f"  - Stability Score: {data['coefficient_of_variation']:.2f}")
                         st.write(f"  - Consistent across months")
                 
                 # Performance distribution insights
-                st.markdown("### 📊 Performance Distribution Insights")
+                st.markdown("###  Performance Distribution Insights")
                 
                 # Calculate performance concentration
                 total_performance = summary_stats['top_performers'].sum()
                 top_3_share = summary_stats['top_performers'].head(3).sum() / total_performance * 100
                 
                 performance_metrics = [
-                    f"🎯 **Top 3 Sectors** account for **{top_3_share:.1f}%** of total performance",
-                    f"📈 **Average Monthly Performance** per sector: {summary_stats['sector_monthly_avg'].mean():,.0f}",
-                    f"🏆 **Performance Leader**: {summary_stats['sector_monthly_avg'].index[0]} ({summary_stats['sector_monthly_avg'].iloc[0]:,.0f})",
-                    f"📊 **Total Sectors Analyzed**: {len(summary_stats['sector_monthly_avg'])}",
-                    f"⏰ **Time Period Coverage**: {len(summary_stats['monthly_totals'])} months"
+                    f" **Top 3 Sectors** account for **{top_3_share:.1f}%** of total performance",
+                    f" **Average Monthly Performance** per sector: {summary_stats['sector_monthly_avg'].mean():,.0f}",
+                    f" **Performance Leader**: {summary_stats['sector_monthly_avg'].index[0]} ({summary_stats['sector_monthly_avg'].iloc[0]:,.0f})",
+                    f" **Total Sectors Analyzed**: {len(summary_stats['sector_monthly_avg'])}",
+                    f" **Time Period Coverage**: {len(summary_stats['monthly_totals'])} months"
                 ]
                 
                 for metric in performance_metrics:
                     st.markdown(metric)
                 
                 # Interactive interpretation guide
-                st.markdown("### 🔍 How to Read the Heatmap")
+                st.markdown("###  How to Read the Heatmap")
                 
                 interpretation_guide = """
                 **Color Intensity Guide:**
