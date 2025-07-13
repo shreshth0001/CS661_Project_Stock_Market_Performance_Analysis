@@ -291,7 +291,7 @@ with col1:
     st.markdown("""
     <div class="feature-card">
         <span class="feature-icon">💰</span>
-        <h3 class="feature-title">Money Flow Dynamics Tracker</h3>
+        <h3 class="feature-title">Sector-Macro Dynamics Tracker</h3>
         <p class="feature-description">
         </p>
         <p><strong>Key Features:</strong></p>
