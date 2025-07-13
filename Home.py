@@ -274,8 +274,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
     <div class="feature-card">
-        <span class="feature-icon">🗺️</span>
-        <h3 class="feature-title">Interactive Sector Heatmap</h3>
+        <h3 class="feature-title">Interactive State-Sector Heatmap</h3>
         <p class="feature-description">
         </p>
         <p><strong>Key Features:</strong></p>
@@ -290,7 +289,6 @@ with col1:
     
     st.markdown("""
     <div class="feature-card">
-        <span class="feature-icon">💰</span>
         <h3 class="feature-title">Sector-Macro Dynamics Tracker</h3>
         <p class="feature-description">
         </p>
@@ -307,7 +305,6 @@ with col1:
 with col2:
     st.markdown("""
     <div class="feature-card">
-        <span class="feature-icon">📊</span>
         <h3 class="feature-title">Stock-Macro Correlation Engine</h3>
         <p class="feature-description">
         </p>
@@ -323,7 +320,6 @@ with col2:
     
     st.markdown("""
     <div class="feature-card">
-        <span class="feature-icon">⚡</span>
         <h3 class="feature-title">Fear & Volatility Analysis Wizard</h3>
         <p class="feature-description">
         </p>
