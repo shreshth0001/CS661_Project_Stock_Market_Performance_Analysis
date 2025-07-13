@@ -174,7 +174,7 @@ st.markdown("""
     <p class="hero-subtitle">Advanced Market Intelligence </p>
     <p class="hero-description">
         A comprehensive financial data visualization suite developed for CS661 at IIT Kanpur, 
-        featuring cutting-edge algorithms, multi-dimensional analysis, and interactive insights 
+        featuring algorithms, multi-dimensional analysis, and interactive insights 
         into America's financial markets.
     </p>
 </div>
@@ -411,11 +411,4 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Performance Metrics Footer
-st.markdown("---")
-st.markdown("""
-<div style="text-align: center; padding: 1rem; color: #718096; font-size: 0.9rem;">
-    <p><strong>Platform Performance:</strong> Sub-second response times • 99.9% data accuracy • Real-time processing • Enterprise-grade scalability</p>
-    <p><em>Developed with ❤️ for CS661 at IIT Kanpur</em></p>
-</div>
-""", unsafe_allow_html=True)
+
