@@ -15,6 +15,23 @@ csv_files = [f
 # Set page config
 st.set_page_config(page_title="Stock Greed-Fear & Volatility Analysis", layout="wide")
 
+st.markdown("""
+   <style>
+   section[data-testid="stSidebar"] {
+       background: #232946;
+       color: #fff;
+   }
+
+   /* CSS hack: Move the first sidebar block to the top */
+   section[data-testid="stSidebar"] > div:first-child {
+       order: -1;
+   }
+   </style>
+   """, unsafe_allow_html=True)
+
+with st.sidebar:
+    st.markdown("<h2 style='margin-bottom: 1.5rem;'>NAVIGATION</h2>", unsafe_allow_html=True)
+
 def calculate_greed_fear_index(df):
     """
     Calculate a greed-fear index based on multiple technical indicators
@@ -259,7 +276,7 @@ def filter_data_by_date(df, start_date, end_date):
         return df
 
 def main():
-    st.title("📈 Stock Greed-Fear, Sentiment & Volatility Analysis")
+    st.title(" Stock Greed-Fear, Sentiment & Volatility Analysis")
     stock = st.selectbox("Select a Stock", [s.removesuffix(".csv") for s in csv_files])
     
     # Read the CSV file
@@ -288,7 +305,7 @@ def main():
         df = df.set_index(date_column)
         
         # Date range selector
-        st.subheader("📅 Date Range Selection")
+        st.subheader(" Date Range Selection")
         col1, col2 = st.columns(2)
         
         # Get min and max dates from the data
@@ -327,13 +344,13 @@ def main():
             return
         
         # Show data range info
-        st.info(f"📊 Showing data from {start_date} to {end_date} ({df.shape[0]} records out of {original_shape[0]} total)")
+        st.info(f" Showing data from {start_date} to {end_date} ({df.shape[0]} records out of {original_shape[0]} total)")
         
     else:
         st.warning("No date column found. Using row index as time axis.")
         st.info("💡 To use date filtering, ensure your CSV has a 'Date', 'date', or 'Datetime' column")
     
-    st.subheader("📊 Data Preview")
+    st.subheader(" Data Preview")
     st.write(f"Data shape: {df.shape}")
     st.dataframe(df.head())
     
@@ -376,7 +393,7 @@ def main():
         st.metric("Current BB Width", f"{current_bb_width:.2f}%")
     
     # Greed-Fear Index Plot
-    st.subheader("🎯 Greed-Fear Index Analysis")
+    st.subheader(" Greed-Fear Index Analysis")
     gf_plot = create_greed_fear_plot(df, "Greed-Fear Index Over Time")
     st.plotly_chart(gf_plot, use_container_width=True)
     
@@ -396,7 +413,7 @@ def main():
     st.info(f"Current Status: {current_gf_status}")
     
     # Sentiment Score Analysis
-    st.subheader("🎯 Sentiment Score Analysis")
+    st.subheader(" Sentiment Score Analysis")
     sentiment_plot = create_sentiment_plot(df, "Technical Sentiment Score Over Time (Scaled by 100)")
     st.plotly_chart(sentiment_plot, use_container_width=True)
     
@@ -416,7 +433,7 @@ def main():
     st.info(f"Current Sentiment: {current_sentiment_status}")
     
     # Volatility Analysis
-    st.subheader("📊 Volatility Analysis")
+    st.subheader(" Volatility Analysis")
     vol_plot = create_volatility_plot(df, "Volatility Metrics Dashboard")
     st.plotly_chart(vol_plot, use_container_width=True)
     
@@ -431,7 +448,7 @@ def main():
     st.plotly_chart(fig_corr, use_container_width=True)
     
     # Summary Statistics
-    st.subheader("📈 Summary Statistics")
+    st.subheader(" Summary Statistics")
     summary_stats = df[['Greed_Fear_Index', 'Sentiment_Score', 'Historical_Volatility', 'ATR_Percentage', 'BB_Width']].describe()
     st.dataframe(summary_stats)
     
@@ -458,7 +475,7 @@ def main():
         st.write(f"• Market State: {'Overheated' if current_gf > 70 else 'Undervalued' if current_gf < 30 else 'Balanced'}")
     
     # Download processed data
-    st.subheader("💾 Download Processed Data")
+    st.subheader(" Download Processed Data")
     csv_data = df.to_csv()
     st.download_button(
         label="Download CSV with all calculated metrics",

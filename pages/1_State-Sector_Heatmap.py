@@ -3,10 +3,28 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+
+st.markdown("""
+   <style>
+   section[data-testid="stSidebar"] {
+       background: #232946;
+       color: #fff;
+   }
+
+   /* CSS hack: Move the first sidebar block to the top */
+   section[data-testid="stSidebar"] > div:first-child {
+       order: -1;
+   }
+   </style>
+   """, unsafe_allow_html=True)
+
 # Header with better styling
 st.markdown("# 🗺️ **US Companies Geographic Distribution Dashboard**")
 st.markdown("### *Explore company distribution across states by industry sector*")
 st.markdown("---")
+
+with st.sidebar:
+    st.markdown("<h2 style='margin-bottom: 1.5rem;'>NAVIGATION</h2>", unsafe_allow_html=True)
 
 # Load data
 geodf = pd.read_csv("data/geodat.csv")
@@ -14,7 +32,7 @@ states = geodf['State']
 sectors = geodf.columns[2:]
 
 # Sector selection with better styling
-st.markdown("#### 🎯 **Select Industry Sector**")
+st.markdown("####  **Select Industry Sector**")
 option = st.selectbox("Choose a sector to analyze:", sectors, help="Select an industry sector to view its geographic distribution")
 
 vals = geodf[option]
@@ -43,7 +61,7 @@ state_codes = {
 df['code'] = df['state'].map(state_codes)
 
 # Main map visualization
-st.markdown(f"## 📍 **Geographic Distribution: {option} Sector**")
+st.markdown(f"##  **Geographic Distribution: {option} Sector**")
 
 # Create choropleth map
 fig = px.choropleth(
@@ -73,7 +91,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.markdown("---")
 
 # Additional statistics section
-st.markdown("## 📊 **Key Analytics & Insights**")
+st.markdown("##  **Key Analytics & Insights**")
 
 # Get top 5 states first
 top_5_states = df.nlargest(5, 'value')
@@ -82,7 +100,7 @@ top_5_states = df.nlargest(5, 'value')
 col_top1, col_top2 = st.columns(2)
 
 with col_top1:
-    st.markdown("### 🏆 **Top 5 Leading States**")
+    st.markdown("###  **Top 5 Leading States**")
     
     # Display top 5 states with metrics
     for i, (idx, row) in enumerate(top_5_states.iterrows(), 1):
@@ -92,7 +110,7 @@ with col_top1:
         )
 
 with col_top2:
-    st.markdown("### 📈 **Top 5 States Visualization**")
+    st.markdown("###  **Top 5 States Visualization**")
     
     # Create a bar chart for top 5 states
     bar_fig = px.bar(
@@ -117,7 +135,7 @@ with col_top2:
     st.plotly_chart(bar_fig, use_container_width=True)
 
 # Statistical overview
-st.markdown("### 📈 **Sector Statistical Summary**")
+st.markdown("###  **Sector Statistical Summary**")
 
 col3, col4, col5, col6 = st.columns(4)
 
@@ -139,9 +157,9 @@ with col6:
 
 # Show detailed table
 st.markdown("---")
-st.markdown("### 📋 **Complete State Rankings**")
+st.markdown("###  **Complete State Rankings**")
 
-with st.expander("🔍 **Click to view detailed data for all states**", expanded=False):
+with st.expander(" **Click to view detailed data for all states**", expanded=False):
     # Sort by value in descending order
     sorted_df = df.sort_values('value', ascending=False).reset_index(drop=True)
     sorted_df.index = sorted_df.index + 1  # Start index from 1
@@ -163,4 +181,4 @@ with st.expander("🔍 **Click to view detailed data for all states**", expanded
 
 # Footer
 st.markdown("---")
-st.markdown("*💡 **Tip**: Use the sector dropdown to explore different industries and see how company distribution varies across the United States.*")
+st.markdown("* **Tip**: Use the sector dropdown to explore different industries and see how company distribution varies across the United States.*")
