@@ -433,23 +433,23 @@ st.markdown('<p class="section-subtitle">Navigate to any module to begin your an
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    if st.button("🗺️ Sector Heatmap", key="nav1", help="Geographic sector concentration analysis"):
-        st.success("🎯 Navigate to: Interactive Sector Concentration Heatmap")
+    if st.button("Sector Heatmap", key="nav1", help="Geographic sector concentration analysis"):
+        st.page_link("pages/1_State-Sector_Heatmap.py",label="🎯 Navigate to: Interactive Sector Concentration Heatmap")
         st.info("Explore how different sectors are geographically distributed across US states")
 
 with col2:
-    if st.button("📊 Stock-Macro Analysis", key="nav2", help="Integrated stock and macroeconomic analysis"):
-        st.success("🎯 Navigate to: Stock-Macro Correlation Engine")
+    if st.button("Stock-Macro Analysis", key="nav2", help="Integrated stock and macroeconomic analysis"):
+        st.page_link("pages/2_Stock-Macro_Analysis.py",label="🎯 Navigate to: Stock-Macro Correlation Engine")
         st.info("Analyze relationships between stock performance and economic indicators")
 
 with col3:
-    if st.button("💰 Money Flow Tracker", key="nav3", help="Sector money flow analysis"):
-        st.success("🎯 Navigate to: Money Flow Dynamics Tracker")
+    if st.button("Sector-Macro Analysis", key="nav3", help="Sector money flow analysis"):
+        st.page_link("pages/3_Sector-Macro_Analysis.py",label="🎯 Navigate to: Money Flow Dynamics Tracker")
         st.info("Track capital movements and identify market trends across sectors")
 
 with col4:
-    if st.button("⚡ Risk Analysis Wizard", key="nav4", help="Fear, volatility, and trend analysis"):
-        st.success("🎯 Navigate to: Fear & Volatility Analysis Wizard")
+    if st.button("Risk Analysis Wizard", key="nav4", help="Fear, volatility, and trend analysis"):
+        st.page_link("pages/4_Risk_Analysis_Wizard.py",label="🎯 Navigate to: Fear & Volatility Analysis Wizard")
         st.info("Comprehensive risk assessment with greed/fear sentiment analysis")
 
 # Team and Course Section
