@@ -49,10 +49,9 @@ This project is a multi‑page **Streamlit** dashboard that lets you visualize s
     - For stocks: `Date`, `Open`, `High`, `Low`, `Close`, `Volume`, `COxV`  
     - For macros: `Date`, `Value`
 - **geodat.csv**
-  - Provides geodata(zipcode, HQ location, etc.) for the different stocks.
-  - Can be fed into geolocating python libraries to obtain locations of companies and their states.
-  - Also provides stock sector data.
----
+  - It is a matrix of number of companies in sector-state combination
+  - It is obtained by using zip code of stocks fetched using yfinance and then using uszip.csv to find the state from the zip code.
+  ---
 
 ## 4. Prerequisites
 
@@ -74,4 +73,4 @@ scipy
 - Download the latest version of Git(probably the x64 systems version's .exe binary) for your specific OS and set it up following it's instructions.
 - Use "git clone https://github.com/the-duckie-2/CS661_Project_Stock_Market_Performance_Analysis.git" to clone the project repository into an empty folder on your local system.
 - Run "pip install -r requirements.txt" to install all the dependencies you will need to deploy the dashboard.
-- Run "streamlit run home.py" and the dashboard will open.
+- Run "streamlit run Home.py" and the dashboard will open.

@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-st.title("Hello and welcome to stock market analyzer")
+# st.title("Hello and welcome to stock market analyzer")
 
 
 
