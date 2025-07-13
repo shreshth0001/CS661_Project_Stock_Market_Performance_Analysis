@@ -70,51 +70,8 @@ def calculate_greed_fear_index(df):
     return df
 
 def calculate_sentiment_score(df):
-    """
-    Calculate sentiment score based on technical indicators and price action
-    """
-    # Price change sentiment
-    df['Price_Change'] = df['Close'].pct_change()
-    df['Price_Change_MA'] = df['Price_Change'].rolling(window=5).mean()
-    
-    # Volume-price relationship
-    df['Volume_Price_Sentiment'] = np.where(
-        df['Price_Change'] > 0,
-        df['Volume'] / df['Volume'].rolling(window=20).mean(),
-        -(df['Volume'] / df['Volume'].rolling(window=20).mean())
-    )
-    
-    # Moving average sentiment
-    df['MA_5'] = df['Close'].rolling(window=5).mean()
-    df['MA_20'] = df['Close'].rolling(window=20).mean()
-    df['MA_Sentiment'] = np.where(df['MA_5'] > df['MA_20'], 1, -1)
-    
-    # RSI sentiment
-    df['RSI_Sentiment'] = np.where(
-        df['RSI'] > 70, -1,  # Overbought (negative sentiment)
-        np.where(df['RSI'] < 30, 1, 0)  # Oversold (positive sentiment)
-    )
-    
-    # Bollinger Bands sentiment
-    df['BB_Sentiment'] = np.where(
-        df['BB_Position'] > 0.8, -1,  # Near upper band (negative)
-        np.where(df['BB_Position'] < 0.2, 1, 0)  # Near lower band (positive)
-    )
-    
-    # Combine sentiment indicators
-    df['Technical_Sentiment'] = (
-        df['MA_Sentiment'] * 0.3 +
-        df['RSI_Sentiment'] * 0.25 +
-        df['BB_Sentiment'] * 0.25 +
-        np.sign(df['Price_Change_MA']) * 0.2
-    )
-    
-    # Normalize to -100 to 100 scale
-    df['Sentiment_Score'] = df['Technical_Sentiment'] * 100
-    
-    # Smooth the sentiment score
-    df['Sentiment_Score'] = df['Sentiment_Score'].rolling(window=3).mean()
-    
+    # df['Sentiment_Score'] = df['Sentiment_Score'].rolling(window=3).mean()
+    df['Sentiment_Score_Plot'] = df['Sentiment_Score'] * 100
     return df
 
 def calculate_volatility_metrics(df):
@@ -185,7 +142,7 @@ def create_greed_fear_plot(df, title="Greed-Fear Index"):
     
     return fig
 
-def create_sentiment_plot(df, title="Sentiment Score Analysis"):
+def create_sentiment_plot(df, title="Sentiment Score Analysis (Scaled by 100)"):
     """
     Create sentiment score plot with color coding
     """
@@ -209,7 +166,7 @@ def create_sentiment_plot(df, title="Sentiment Score Analysis"):
     
     fig.add_trace(go.Scatter(
         x=df.index,
-        y=df['Sentiment_Score'],
+        y=df['Sentiment_Score_Plot'],
         mode='lines+markers',
         name='Sentiment Score',
         line=dict(color='black', width=2),
@@ -379,7 +336,7 @@ def main():
     
     # Sentiment Score Analysis
     st.subheader("🎯 Sentiment Score Analysis")
-    sentiment_plot = create_sentiment_plot(df, "Technical Sentiment Score Over Time")
+    sentiment_plot = create_sentiment_plot(df, "Technical Sentiment Score Over Time (Scaled by 100)")
     st.plotly_chart(sentiment_plot, use_container_width=True)
     
     # Sentiment interpretation
