@@ -56,9 +56,13 @@ fig = px.choropleth(
     title=f"Company Distribution Across US States - {option}",
     labels={'value': 'Number of Companies'}
 )
+# fig.update_geos(bgcolor='#0e1117')
+fig.update_geos(bgcolor='lightblue')
 
-# Update layout for better appearance
 fig.update_layout(
+    # plot_bgcolor=plot_bgcolor,
+    # paper_bgcolor=paper_bgcolor,
+    # font=dict(color=font_color),
     height=600,
     title_font_size=18,
     coloraxis_colorbar=dict(
@@ -67,7 +71,7 @@ fig.update_layout(
     )
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True,theme="streamlit")
 
 # Separator for better organization
 st.markdown("---")
